@@ -1,16 +1,23 @@
 /* @flow */
 
-import React, { PropTypes } from 'react';
+import React, {
+  PropTypes,
+} from 'react';
+
 import {
   I18nManager,
-  Image,
-  View,
   Platform,
-  StyleSheet,
 } from 'react-native';
 
-import { Icon, Button, Text } from 'native-base';
-import type { LayoutEvent } from 'react-navigation/lib/TypeDefinition';
+import {
+  Icon,
+  Button,
+  Text,
+} from 'native-base';
+
+import type {
+  LayoutEvent,
+} from 'react-navigation/lib/TypeDefinition';
 
 type Props = {
   onPress?: () => void,
@@ -57,7 +64,13 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
   };
 
   render() {
-    const { onPress, width, title, tintColor, truncatedTitle } = this.props;
+    const {
+      onPress,
+      width,
+      title,
+      tintColor,
+      truncatedTitle,
+    } = this.props;
 
     const renderTruncated = this.state.initialTextWidth && width
       ? this.state.initialTextWidth > width
@@ -70,7 +83,7 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
     if (title) {
       iconStyle = {
         ...iconStyle,
-        ...styles.iconWithTitle
+        ...styles.iconWithTitle,
       };
     }
 
@@ -79,11 +92,13 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
         transparent
         onPress={onPress}
       >
-        <Icon name='arrow-back' style={iconStyle} />
+        <Icon name="arrow-back" style={iconStyle} />
         {Platform.OS === 'ios' && title && (
           <Text
             onLayout={this._onTextLayout}
-            style={[styles.title, { color: tintColor }]}
+            style={[styles.title, {
+              color: tintColor,
+            }]}
             numberOfLines={1}
           >
             {renderTruncated ? truncatedTitle : title}
@@ -111,13 +126,17 @@ const styles = {
       marginLeft: 10,
       marginRight: 22,
       marginVertical: 12,
-      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+      transform: [{
+        scaleX: I18nManager.isRTL ? -1 : 1,
+      }],
     }
     : {
       height: 24,
       width: 24,
       margin: 16,
-      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+      transform: [{
+        scaleX: I18nManager.isRTL ? -1 : 1,
+      }],
     },
   iconWithTitle: Platform.OS === 'ios'
     ? {

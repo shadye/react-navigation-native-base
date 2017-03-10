@@ -33,15 +33,48 @@ const AppNavigator = StackNavigator({
   * `left` - Left header component, automatically wrapped in `<Left>` component.
     Pass `null` to disable
 
+  * `leftProps` - Props passed to `<Left>`.
+
   * `right` - Right header component, automatically wrapped in `<Right>`
     component. Pass `null` to disable
+
+  * `rightProps` - Props passed to `<Right>`.
 
   * `title` - Title header component, Strings are automatically wrapped in
     `<Body><Title></Title></Body>`, React elements rendered as-is.
 
-## Example
+  * `bodyProps` - Props passed to `<Body>`.
+  * `titleProps` - Props passed to `<Title>`.
 
-Example screen that renders a search bar in the header:
+## Examples
+
+### Hide header drop-shadow when nested TabNavigator visible
+
+```
+TabNavigator.navigationOptions = {
+  header: {
+    style: {
+      elevation: 0 // disable elevation when TabNavigator visible
+    }
+  }
+};
+```
+
+### Make <Body>/<Title> components wider
+
+```
+AppNavigator.navigationOptions = {
+  header: {
+    bodyProps: {
+      style: {
+        flex: 0 // beats me why <Left>, <Right>, <Body> all have 'flex: 1'
+      }
+    }
+  }
+};
+```
+
+### Screen with search bar in header
 
 ```
 import { Item, Input, Icon } from 'native-base';

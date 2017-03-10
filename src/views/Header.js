@@ -1,6 +1,8 @@
 /* @flow */
 
-import React, { PropTypes } from 'react';
+import React, {
+  PropTypes,
+} from 'react';
 
 import {
   Animated,
@@ -9,12 +11,16 @@ import {
   View,
 } from 'react-native';
 
-import {Container, Header as NBHeader, Title, Button, Text, Left, Right, Body, Icon} from 'native-base';
-
-import ReactComponentWithPureRenderMixin from 'react/lib/ReactComponentWithPureRenderMixin';
+import {
+  Container,
+  Header as NBHeader,
+  Title,
+  Left,
+  Right,
+  Body,
+} from 'native-base';
 
 import HeaderTitle from 'react-navigation/lib/views/HeaderTitle';
-import HeaderBackButton from './HeaderBackButton';
 import HeaderStyleInterpolator from 'react-navigation/lib/views/HeaderStyleInterpolator';
 import NavigationPropTypes from 'react-navigation/lib/PropTypes';
 import addNavigationHelpers from 'react-navigation/lib/addNavigationHelpers';
@@ -25,10 +31,11 @@ import type {
   NavigationAction,
   NavigationScreenProp,
   NavigationSceneRendererProps,
-  NavigationStyleInterpolator,
-  LayoutEvent,
+  // NavigationStyleInterpolator,
   Style,
 } from 'react-navigation/lib/TypeDefinition';
+
+import HeaderBackButton from './HeaderBackButton';
 
 export type HeaderMode = 'float' | 'screen' | 'none';
 
@@ -45,7 +52,6 @@ export type HeaderProps = NavigationSceneRendererProps & {
   onNavigateBack?: () => void,
   renderLeftComponent: SubViewRenderer,
   renderRightComponent: SubViewRenderer,
-  renderTitleComponent: SubViewRenderer,
   tintColor?: string,
   router: NavigationRouter,
 };
@@ -74,7 +80,6 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     onNavigateBack: PropTypes.func,
     renderLeftComponent: PropTypes.func,
     renderRightComponent: PropTypes.func,
-    renderTitleComponent: PropTypes.func,
     router: PropTypes.object,
     style: PropTypes.any,
   };
@@ -120,34 +125,6 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     return undefined;
   }
 
-  _renderTitleComponent = (props: SubViewProps) => {
-    const titleStyle = this._getHeaderTitleStyle(props.navigation);
-    const color = this._getHeaderTintColor(props.navigation);
-    const title = this._getHeaderTitle(props.navigation);
-
-    // On iOS, width of left/right components depends on the calculated
-    // size of the title.
-    const onLayoutIOS = Platform.OS === 'ios'
-      ? (e: LayoutEvent) => {
-        this.setState({
-          widths: {
-            ...this.state.widths,
-            [props.key]: e.nativeEvent.layout.width,
-          },
-        });
-      }
-      : undefined;
-
-    return (
-      <HeaderTitle
-        onLayout={onLayoutIOS}
-        style={[color ? { color } : null, titleStyle]}
-      >
-        {title}
-      </HeaderTitle>
-    );
-  };
-
   _renderLeftComponent = (props: SubViewProps) => {
     if (props.scene.index === 0 || !props.onNavigateBack) {
       return null;
@@ -184,27 +161,6 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     );
   }
 
-  _renderTitle(props: NavigationSceneRendererProps, options: *): ?React.Element<*> {
-    const style = {};
-
-    if (Platform.OS === 'android') {
-      if (!options.hasLeftComponent) {
-        style.left = 0;
-      }
-      if (!options.hasRightComponent) {
-        style.right = 0;
-      }
-    }
-
-    return this._renderSubView(
-      { ...props, style },
-      'title',
-      this.props.renderTitleComponent,
-      this._renderTitleComponent,
-      HeaderStyleInterpolator.forCenter,
-    );
-  }
-
   _renderRight(props: NavigationSceneRendererProps): ?React.Element<*> {
     return this._renderSubView(
       props,
@@ -220,7 +176,7 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     name: SubViewName,
     renderer: SubViewRenderer,
     defaultRenderer: SubViewRenderer,
-    styleInterpolator: NavigationStyleInterpolator,
+    // styleInterpolator: NavigationStyleInterpolator,
   ): ?React.Element<*> {
     const {
       scene,
@@ -228,8 +184,8 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     } = props;
     const {
       index,
-      isStale,
-      key,
+      // isStale,
+      // key,
     } = scene;
 
     const offset = navigationState.index - index;
@@ -254,12 +210,13 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
       return null;
     }
 
-    const pointerEvents = offset !== 0 || isStale ? 'none' : 'box-none';
-
     // works
     return subView;
 
+    // TODO
     /*
+    const pointerEvents = offset !== 0 || isStale ? 'none' : 'box-none';
+
     const AnimatedSubView = Animated.createAnimatedComponent(subView);
 
     return (
@@ -280,57 +237,44 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
   _renderHeader(props: NavigationSceneRendererProps): React.Element<*> {
     const header = this.props.router.getScreenConfig(props.navigation, 'header');
     const headerProps = header ? header.props : {};
+    const leftProps = header ? header.leftProps : {};
+    const rightProps = header ? header.rightProps : {};
+    const bodyProps = header ? header.bodyProps : {};
+    const titleProps = header ? header.titleProps : {};
 
-    console.log(header);
-    /*
-    console.log(this.props);
-    console.log(props);
-    */
-
-    let left = <Left>{this._renderLeft(props)}</Left>;
+    let left = <Left {...leftProps}>{this._renderLeft(props)}</Left>;
     if (header.left === null) {
       left = null;
     }
 
-    let right = <Right>{this._renderRight(props)}</Right>;
+    let right = <Right {...rightProps}>{this._renderRight(props)}</Right>;
     if (header.right === null) {
       right = null;
     }
 
     let title = this._getHeaderTitle(props.navigation);
     if (title) {
-      title = <Body><Title>{title}</Title></Body>
+      title = (
+        <Body {...bodyProps}>
+          <Title {...titleProps}>
+            {title}
+          </Title>
+        </Body>
+      );
     } else {
       title = header.title;
     }
 
     return (
       <Container>
-      <NBHeader
-        key={`scene_${props.scene.key}`}
-        {...headerProps}
-      >
-        {left}
-        {title}
-        {right}
-        {/*
-        // WORKS
-        {right}
-        // BROKEN
-        <Right>{right}</Right>
-        // WORKS
-        <Right>{header.right}</Right>
-
-        <Right>
-          <Button
-            onPress={props.onNavigateBack}
-            width={48}
-          >
-            <Text>foo</Text>
-          </Button>
-        </Right>
-        */}
-      </NBHeader>
+        <NBHeader
+          key={`scene_${props.scene.key}`}
+          {...headerProps}
+        >
+          {left}
+          {title}
+          {right}
+        </NBHeader>
       </Container>
     );
   }
@@ -360,7 +304,14 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     }
 
     // eslint-disable-next-line no-unused-vars
-    const { scenes, scene, style, position, progress, ...rest } = this.props;
+    const {
+      // scenes,
+      // scene,
+      style,
+      // position,
+      // progress,
+      ...rest
+    } = this.props;
 
     return (
       <Animated.View {...rest} style={[styles.container, style]}>
