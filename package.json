@@ -1,32 +1,26 @@
 {
-  "name": "react-navigation",
+  "name": "react-navigation-native-base",
   "version": "1.0.0-beta.6",
-  "description": "React Navigation",
+  "description": "NativeBase Header component for react-navigation",
   "main": "src/react-navigation.js",
   "sources": {
-    "react-native-v1": "lib-rn/react-navigation.js",
-    "web": "lib/react-navigation.web.js"
+    "react-native-v1": "lib-rn/react-navigation.js"
   },
-  "module": "lib/react-navigation.web.js",
-  "webpack": "lib/react-navigation.web.js",
+  "module": "lib-rn/react-navigation.js",
+  "webpack": "lib-rn/react-navigation.js",
   "repository": {
-    "url": "git@github.com:react-community/react-navigation.git",
+    "url": "git@github.com:FruitieX/react-navigation-native-base.git",
     "type": "git"
   },
   "author": "Adam Miskiewicz <adam@sk3vy.com>",
   "license": "BSD-2-Clause",
   "scripts": {
     "clean": "rm -rf lib/ lib-rn/",
-    "build": "npm run build-docs && npm run build-web && npm run build-rn && npm run build-dot-flow",
-    "watch-rn": "mkdir -p lib-rn/views/ && cp -R src/views/assets lib/views/assets && BABEL_ENV=publish-rn babel -w src -d lib-rn",
-    "watch-web": "mkdir -p lib/views/ &&  cp -R src/views/assets lib/views/assets && BABEL_ENV=publish-web babel -w src -d lib",
-    "build-rn": "mkdir -p lib-rn/views/ && cp -R src/views/assets lib-rn/views/assets && BABEL_ENV=publish-rn babel src -d lib-rn",
-    "build-web": "mkdir -p lib/views/ && cp -R src/views/assets lib/views/assets && BABEL_ENV=publish-web babel src -d lib",
+    "build": "npm run build-rn",
+    "watch-rn": "mkdir -p lib-rn/views/ && BABEL_ENV=publish-rn babel -w src -d lib-rn",
+    "build-rn": "mkdir -p lib-rn/views/ && BABEL_ENV=publish-rn babel src -d lib-rn",
     "build-dot-flow": "find ./src -name '*.js' -not -path '*/__tests__*' | while read filepath; do cp $filepath `echo $filepath | sed 's/\\/src\\//\\/lib\\//g'`.flow && cp $filepath `echo $filepath | sed 's/\\/src\\//\\/lib-rn\\//g'`.flow; done",
-    "build-docs": "node scripts/compile-docs",
     "start": "node ./node_modules/react-native/local-cli/cli.js start --config ./rn-cli.config.js",
-    "run-playground-ios": "cd examples/NavigationPlayground && react-native run-ios",
-    "run-playground-android": "cd examples/NavigationPlayground && react-native run-android",
     "test": "jest",
     "flow": "flow",
     "prepublish": "npm run clean && npm run build"
@@ -54,6 +48,7 @@
     "eslint-plugin-react": "^6.3.0",
     "flow-bin": "^0.37.4",
     "jest": "^18.1.0",
+    "native-base": "^2.0.12",
     "react": "~15.4.2",
     "react-native": "^0.41.2",
     "react-native-vector-icons": "^3.0.0",
@@ -61,15 +56,10 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "native-base": "*"
   },
   "dependencies": {
-    "clamp": "^1.0.1",
-    "fbjs": "^0.8.5",
-    "hoist-non-react-statics": "^1.2.0",
-    "path-to-regexp": "^1.7.0",
-    "react-native-drawer-layout-polyfill": "^1.0.4",
-    "react-native-tab-view": "^0.0.56"
   },
   "jest": {
     "notify": true,
