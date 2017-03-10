@@ -303,15 +303,16 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
       });
     }
 
-    // eslint-disable-next-line no-unused-vars
+    /* eslint-disable no-unused-vars */
     const {
-      // scenes,
-      // scene,
+      scenes,
+      scene,
       style,
-      // position,
-      // progress,
+      position,
+      progress,
       ...rest
     } = this.props;
+    /* eslint-enable no-unused-vars */
 
     return (
       <Animated.View {...rest} style={[styles.container, style]}>
