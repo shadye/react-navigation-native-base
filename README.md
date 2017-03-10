@@ -60,7 +60,7 @@ TabNavigator.navigationOptions = {
 };
 ```
 
-### Make <Body>/<Title> components wider
+### Make `<Body>`/`<Title>` components wider
 
 ```
 AppNavigator.navigationOptions = {
