@@ -1,55 +1,68 @@
-# React Navigation [![CircleCI](https://circleci.com/gh/react-community/react-navigation/tree/master.svg?style=shield&circle-token=622fcb1d78413084c2f44699ed2104246a177485)](https://circleci.com/gh/react-community/react-navigation/tree/master) [![npm version](https://badge.fury.io/js/react-navigation.svg)](https://badge.fury.io/js/react-navigation)
+# react-navigation-native-base
 
-*Learn once, navigate anywhere.*
+NativeBase Header component for react-navigation
 
-Browse the docs on [reactnavigation.org](https://reactnavigation.org/).
+## Setup
 
-## Motivation
+```
+yarn add react-navigation-native-base
+```
 
-React Navigation is born from the React Native community's need for an
-extensible yet easy-to-use navigation solution. It replaces and improves
-upon several navigation libraries in the ecosystem, including Ex-Navigation,
-React Native's Navigator and NavigationExperimental components. React
-Navigation can also be used across React and React Native projects allowing
-for a higher degree of shared code.
+```
+import { Header } from 'react-navigation-native-base';
 
-Once stable, NavigationExperimental will be deprecated in favor of React
-Navigation. React Navigation is a collaboration between people from
-Facebook, Exponent and the React community at large.
+...
 
-## [Getting started](https://reactnavigation.org/docs/intro/)
+const AppNavigator = StackNavigator({
+  // RouteConfigs
+}, {
+  headerComponent: Header
+});
+```
 
-1. Create a new React Native App
-  ```
-  react-native init SimpleApp
-  cd SimpleApp
-  ```
+## Extra navigationOptions
 
-2. Install the latest version of react-navigation from npm
-  ```
-  yarn add react-navigation
-  ```
-  or
-  ```
-  npm install --save react-navigation
-  ```
+* `header` - a config object for the header bar:
 
-3. Run the new app
-  ```
-  react-native run-android # or:
-  react-native run-ios
-  ```
+  * `props` - Props that will be passed to the NativeBase `<Header>` component
 
-## Advanced guide
+  * `left` - Left header component, automatically wrapped in `<Left>` component.
+    Pass `null` to disable
 
-- [Redux integration](https://reactnavigation.org/docs/guides/redux)
-- [Web integration](https://reactnavigation.org/docs/guides/web)
-- [Deep linking](https://reactnavigation.org/docs/guides/linking)
-- [Contributors guide](https://reactnavigation.org/docs/guides/contributors)
+  * `right` - Right header component, automatically wrapped in `<Right>`
+    component. Pass `null` to disable
 
-## React Navigation API
+  * `title` - Title header component, Strings are automatically wrapped in
+    `<Body><Title></Title></Body>`, React elements rendered as-is.
 
-- [Navigators](https://reactnavigation.org/docs/navigators/)
-- [Routers](https://reactnavigation.org/docs/routers/)
-- [Views](https://reactnavigation.org/docs/views/)
+```
 
+## Example
+
+Example screen that renders a search bar in the header:
+
+```
+class MyView extends Component {
+  ...
+
+  static navigationOptions = {
+    header: {
+      props: {
+        searchBar: true,
+        rounded: true
+      },
+      right: null, // don't draw a <Right/> element in the header
+      title: (
+        <Item>
+          <Icon name='search' />
+          <Input placeholder='Search' />
+          <Icon active name='people' />
+        </Item>
+      )
+    }
+  }
+
+  ...
+}
+
+```
