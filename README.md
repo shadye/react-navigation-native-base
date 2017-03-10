@@ -30,21 +30,12 @@ const AppNavigator = StackNavigator({
 
   * `props` - Props that will be passed to the NativeBase `<Header>` component
 
-  * `left` - Left header component, automatically wrapped in `<Left>` component.
-    Pass `null` to disable
-
-  * `leftProps` - Props passed to `<Left>`.
+  * `left` - Left header component, automatically wrapped in `<Left>`
 
   * `right` - Right header component, automatically wrapped in `<Right>`
-    component. Pass `null` to disable
-
-  * `rightProps` - Props passed to `<Right>`.
 
   * `title` - Title header component, Strings are automatically wrapped in
-    `<Body><Title></Title></Body>`, React elements rendered as-is.
-
-  * `bodyProps` - Props passed to `<Body>`.
-  * `titleProps` - Props passed to `<Title>`.
+    `<Body><Title></Title></Body>`, React elements rendered as-is. (TODO)
 
   * `backButton` - Use custom back button component
 
@@ -75,21 +66,7 @@ TabNavigator.navigationOptions = {
 };
 ```
 
-### Make `<Body>`/`<Title>` components wider
-
-```
-AppNavigator.navigationOptions = {
-  header: {
-    bodyProps: {
-      style: {
-        flex: 0 // beats me why <Left>, <Right>, <Body> all have 'flex: 1'
-      }
-    }
-  }
-};
-```
-
-### Screen with search bar in header
+### Screen with search bar in header (TODO)
 
 ```
 import { Item, Input, Icon } from 'native-base';
