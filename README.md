@@ -2,6 +2,10 @@
 
 NativeBase Header component for react-navigation
 
+## Requirements
+* [react-navigation](https://reactnavigation.org/docs/intro/)
+* [NativeBase](http://nativebase.io/docs/v2.0.0/getting-started)
+
 ## Setup
 
 ```
@@ -40,6 +44,10 @@ const AppNavigator = StackNavigator({
 Example screen that renders a search bar in the header:
 
 ```
+import { Item, Input, Icon } from 'native-base';
+
+...
+
 class MyView extends Component {
   ...
 
