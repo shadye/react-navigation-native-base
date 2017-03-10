@@ -35,8 +35,6 @@ const AppNavigator = StackNavigator({
   * `title` - Title header component, Strings are automatically wrapped in
     `<Body><Title></Title></Body>`, React elements rendered as-is.
 
-```
-
 ## Example
 
 Example screen that renders a search bar in the header:
