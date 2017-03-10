@@ -4,15 +4,13 @@ import React, { PropTypes } from 'react';
 import {
   I18nManager,
   Image,
-  Text,
   View,
   Platform,
   StyleSheet,
 } from 'react-native';
 
-import type { LayoutEvent } from '../TypeDefinition';
-
-import TouchableItem from './TouchableItem';
+import { Icon, Button, Text } from 'native-base';
+import type { LayoutEvent } from 'react-navigation/lib/TypeDefinition';
 
 type Props = {
   onPress?: () => void,
@@ -65,38 +63,38 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
       ? this.state.initialTextWidth > width
       : false;
 
+    let iconStyle = {
+      ...styles.icon,
+      //color: tintColor
+    };
+    if (title) {
+      iconStyle = {
+        ...iconStyle,
+        ...styles.iconWithTitle
+      };
+    }
+
     return (
-      <TouchableItem
-        delayPressIn={0}
+      <Button
+        transparent
         onPress={onPress}
-        style={styles.container}
-        borderless
       >
-        <View style={styles.container}>
-          <Image
-            style={[
-              styles.icon,
-              title && styles.iconWithTitle,
-              { tintColor },
-            ]}
-            source={require('./assets/back-icon.png')}
-          />
-          {Platform.OS === 'ios' && title && (
-            <Text
-              onLayout={this._onTextLayout}
-              style={[styles.title, { color: tintColor }]}
-              numberOfLines={1}
-            >
-              {renderTruncated ? truncatedTitle : title}
-            </Text>
-          )}
-        </View>
-      </TouchableItem>
+        <Icon name='arrow-back' style={iconStyle} />
+        {Platform.OS === 'ios' && title && (
+          <Text
+            onLayout={this._onTextLayout}
+            style={[styles.title, { color: tintColor }]}
+            numberOfLines={1}
+          >
+            {renderTruncated ? truncatedTitle : title}
+          </Text>
+        )}
+      </Button>
     );
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -113,14 +111,12 @@ const styles = StyleSheet.create({
       marginLeft: 10,
       marginRight: 22,
       marginVertical: 12,
-      resizeMode: 'contain',
       transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
     }
     : {
       height: 24,
       width: 24,
       margin: 16,
-      resizeMode: 'contain',
       transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
     },
   iconWithTitle: Platform.OS === 'ios'
@@ -128,6 +124,6 @@ const styles = StyleSheet.create({
       marginRight: 5,
     }
     : {},
-});
+};
 
 export default HeaderBackButton;

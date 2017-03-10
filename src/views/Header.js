@@ -9,13 +9,15 @@ import {
   View,
 } from 'react-native';
 
+import {Container, Header as NBHeader, Title, Button, Text, Left, Right, Body, Icon} from 'native-base';
+
 import ReactComponentWithPureRenderMixin from 'react/lib/ReactComponentWithPureRenderMixin';
 
-import HeaderTitle from './HeaderTitle';
+import HeaderTitle from 'react-navigation/lib/views/HeaderTitle';
 import HeaderBackButton from './HeaderBackButton';
-import HeaderStyleInterpolator from './HeaderStyleInterpolator';
-import NavigationPropTypes from '../PropTypes';
-import addNavigationHelpers from '../addNavigationHelpers';
+import HeaderStyleInterpolator from 'react-navigation/lib/views/HeaderStyleInterpolator';
+import NavigationPropTypes from 'react-navigation/lib/PropTypes';
+import addNavigationHelpers from 'react-navigation/lib/addNavigationHelpers';
 
 import type {
   NavigationScene,
@@ -26,7 +28,7 @@ import type {
   NavigationStyleInterpolator,
   LayoutEvent,
   Style,
-} from '../TypeDefinition';
+} from 'react-navigation/lib/TypeDefinition';
 
 export type HeaderMode = 'float' | 'screen' | 'none';
 
@@ -159,6 +161,7 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     const width = this.state.widths[props.key]
       ? (props.layout.initWidth - this.state.widths[props.key]) / 2
       : undefined;
+
     return (
       <HeaderBackButton
         onPress={props.onNavigateBack}
@@ -253,39 +256,82 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
 
     const pointerEvents = offset !== 0 || isStale ? 'none' : 'box-none';
 
+    // works
+    return subView;
+
+    /*
+    const AnimatedSubView = Animated.createAnimatedComponent(subView);
+
     return (
-      <Animated.View
+      <AnimatedSubView
         pointerEvents={pointerEvents}
         key={`${name}_${key}`}
         style={[
           styles.item,
           styles[name],
           props.style,
-          styleInterpolator(props),
+          styleInterpolator(props)
         ]}
-      >
-        {subView}
-      </Animated.View>
+      />
     );
+    */
   }
 
   _renderHeader(props: NavigationSceneRendererProps): React.Element<*> {
-    const left = this._renderLeft(props);
-    const right = this._renderRight(props);
-    const title = this._renderTitle(props, {
-      hasLeftComponent: !!left,
-      hasRightComponent: !!right,
-    });
+    const header = this.props.router.getScreenConfig(props.navigation, 'header');
+    const headerProps = header ? header.props : {};
+
+    console.log(header);
+    /*
+    console.log(this.props);
+    console.log(props);
+    */
+
+    let left = <Left>{this._renderLeft(props)}</Left>;
+    if (header.left === null) {
+      left = null;
+    }
+
+    let right = <Right>{this._renderRight(props)}</Right>;
+    if (header.right === null) {
+      right = null;
+    }
+
+    let title = this._getHeaderTitle(props.navigation);
+    if (title) {
+      title = <Body><Title>{title}</Title></Body>
+    } else {
+      title = header.title;
+    }
 
     return (
-      <View
-        style={[StyleSheet.absoluteFill, styles.header]}
+      <Container>
+      <NBHeader
         key={`scene_${props.scene.key}`}
+        {...headerProps}
       >
-        {title}
         {left}
+        {title}
         {right}
-      </View>
+        {/*
+        // WORKS
+        {right}
+        // BROKEN
+        <Right>{right}</Right>
+        // WORKS
+        <Right>{header.right}</Right>
+
+        <Right>
+          <Button
+            onPress={props.onNavigateBack}
+            width={48}
+          >
+            <Text>foo</Text>
+          </Button>
+        </Right>
+        */}
+      </NBHeader>
+      </Container>
     );
   }
 
