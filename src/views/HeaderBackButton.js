@@ -22,13 +22,11 @@ import type {
 type Props = {
   onPress?: () => void,
   title?: ?string,
-  tintColor?: ?string,
   truncatedTitle?: ?string,
   width?: ?number,
 };
 
 type DefaultProps = {
-  tintColor: ?string,
   truncatedTitle: ?string,
 };
 
@@ -40,15 +38,11 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
   static propTypes = {
     onPress: PropTypes.func.isRequired,
     title: PropTypes.string,
-    tintColor: PropTypes.string,
     truncatedTitle: PropTypes.string,
     width: PropTypes.number,
   };
 
   static defaultProps = {
-    tintColor: Platform.select({
-      ios: '#037aff',
-    }),
     truncatedTitle: 'Back',
   };
 
@@ -68,7 +62,6 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
       onPress,
       width,
       title,
-      tintColor,
       truncatedTitle,
     } = this.props;
 
@@ -78,7 +71,6 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
 
     let iconStyle = {
       ...styles.icon,
-      //color: tintColor
     };
     if (title) {
       iconStyle = {
@@ -96,9 +88,7 @@ class HeaderBackButton extends React.PureComponent<DefaultProps, Props, State> {
         {Platform.OS === 'ios' && title && (
           <Text
             onLayout={this._onTextLayout}
-            style={[styles.title, {
-              color: tintColor,
-            }]}
+            style={styles.title}
             numberOfLines={1}
           >
             {renderTruncated ? truncatedTitle : title}

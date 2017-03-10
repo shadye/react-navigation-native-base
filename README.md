@@ -46,6 +46,21 @@ const AppNavigator = StackNavigator({
   * `bodyProps` - Props passed to `<Body>`.
   * `titleProps` - Props passed to `<Title>`.
 
+  * `backButton` - Use custom back button component
+
+## Custom back button
+
+Custom back button component can be passed as
+`navigationOptions.header.backButton`.
+
+Component is not rendered if navigating further back is not possible.
+
+The component will receive the following props:
+
+* onPress - Triggers navigate back
+* title - Title of back button (useful especially in iOS)
+* width - Desired max width of component
+
 ## Examples
 
 ### Hide header drop-shadow when nested TabNavigator visible

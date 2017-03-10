@@ -52,7 +52,6 @@ export type HeaderProps = NavigationSceneRendererProps & {
   onNavigateBack?: () => void,
   renderLeftComponent: SubViewRenderer,
   renderRightComponent: SubViewRenderer,
-  tintColor?: string,
   router: NavigationRouter,
 };
 
@@ -72,7 +71,6 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
 
   static HEIGHT = APPBAR_HEIGHT + STATUSBAR_HEIGHT;
   static Title = HeaderTitle;
-  static BackButton = HeaderBackButton;
 
   // propTypes for people who don't use Flow
   static propTypes = {
@@ -109,14 +107,6 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     return header.backTitle || this._getHeaderTitle(navigation);
   }
 
-  _getHeaderTintColor(navigation: Navigation): ?string {
-    const header = this.props.router.getScreenConfig(navigation, 'header');
-    if (header && header.tintColor) {
-      return header.tintColor;
-    }
-    return undefined;
-  }
-
   _getHeaderTitleStyle(navigation: Navigation): Style {
     const header = this.props.router.getScreenConfig(navigation, 'header');
     if (header && header.titleStyle) {
@@ -129,7 +119,6 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
     if (props.scene.index === 0 || !props.onNavigateBack) {
       return null;
     }
-    const tintColor = this._getHeaderTintColor(props.navigation);
     const previousNavigation = addNavigationHelpers({
       ...props.navigation,
       state: props.scenes[props.scene.index - 1].route,
@@ -139,13 +128,22 @@ class Header extends React.PureComponent<void, HeaderProps, HeaderState> {
       ? (props.layout.initWidth - this.state.widths[props.key]) / 2
       : undefined;
 
+    const header = this.props.router.getScreenConfig(props.navigation, 'header');
+    const CustomBackButton = header.backButton;
+
     return (
-      <HeaderBackButton
-        onPress={props.onNavigateBack}
-        tintColor={tintColor}
-        title={backButtonTitle}
-        width={width}
-      />
+      CustomBackButton ?
+        <CustomBackButton
+          onPress={props.onNavigateBack}
+          title={backButtonTitle}
+          width={width}
+        />
+        :
+        <HeaderBackButton
+          onPress={props.onNavigateBack}
+          title={backButtonTitle}
+          width={width}
+        />
     );
   };
 
