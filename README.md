@@ -139,7 +139,7 @@ class MyView extends Component {
 
   static navigationOptions = {
     header: {
-      props: {
+      containerProps: {
         searchBar: true,
         rounded: true
       },
