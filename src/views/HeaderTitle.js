@@ -2,12 +2,10 @@
 
 import React from 'react';
 
-import { Title, Text } from 'native-base';
+import { Title } from 'native-base';
 
 const HeaderTitle = ({ ...rest }) => (
-  <Title>
-    <Text numberOfLines={1} {...rest} />
-  </Title>
+  <Title numberOfLines={1} {...rest} />
 );
 
 export default HeaderTitle;
