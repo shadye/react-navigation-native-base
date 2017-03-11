@@ -94,24 +94,40 @@ class CustomNavigationHeader extends ReactNavigationHeader {
   // Custom _renderHeader() which renders children inside an invisible NativeBase <Header>
   _renderHeader(props: NavigationSceneRendererProps): React.Element<*> {
     const header = this.props.router.getScreenConfig(this.props.navigation, 'header');
-    const headerProps = header ? header.props : {};
+    const containerProps = header ? header.containerProps : {};
 
     const left = this._renderLeft(props);
     const right = this._renderRight(props);
+
     const title = this._renderTitle(props, {
       hasLeftComponent: !!left,
       hasRightComponent: !!right,
     });
+
+    let headerChildren = header && header.children;
+
+    if (!headerChildren) {
+      headerChildren = (childProps) => ([
+        <Left key='left'>{childProps.left}</Left>,
+        <Body key='body'>{childProps.title}</Body>,
+        <Right key='right'>{childProps.right}</Right>,
+      ])
+    }
 
     return (
       <View
         style={StyleSheet.absoluteFill}
         key={`scene_${props.scene.key}`}
       >
-        <Header style={styles.header} {...headerProps}>
-          <Left>{left}</Left>
-          <Body>{title}</Body>
-          <Right>{right}</Right>
+        <Header style={styles.header} {...containerProps}>
+          {headerChildren({
+            left,
+            right,
+            title,
+            scene: props.scene,
+            navigationState: props.navigationState,
+            onNavigateBack: this.props.onNavigateBack,
+          })}
         </Header>
       </View>
     );
@@ -145,9 +161,12 @@ class CustomNavigationHeader extends ReactNavigationHeader {
     // eslint-disable-next-line no-unused-vars
     const { scenes, scene, style, position, progress, ...rest } = this.props;
 
+    const header = this.props.router.getScreenConfig(this.props.navigation, 'header');
+    const headerProps = header ? header.props : {};
+
     return (
       <Animated.View {...rest} style={style}>
-        <Header>
+        <Header {...headerProps}>
           {appBar}
         </Header>
       </Animated.View>
@@ -158,6 +177,7 @@ class CustomNavigationHeader extends ReactNavigationHeader {
 const styles = {
   header: {
     backgroundColor: 'transparent',
+    elevation: 0,
   },
 };
 
