@@ -2,6 +2,8 @@
 
 NativeBase Header component for react-navigation
 
+Coming soon™: TabBar and Drawer shims
+
 ## Requirements
 * [react-navigation](https://reactnavigation.org/docs/intro/)
 * [NativeBase](http://nativebase.io/docs/v2.0.0/getting-started)
