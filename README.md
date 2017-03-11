@@ -26,7 +26,10 @@ const AppNavigator = StackNavigator({
 });
 ```
 
-## Implementation
+That's it! Now your react-navigation header will have the look and feel of a
+NativeBase `<Header>`.
+
+## Notes about library implementation
 
 Modifications to react-navigation code are kept to a minimum. As a result, the
 component structure is very similar to what is used in the vanilla
@@ -34,7 +37,7 @@ react-navigation header, and code is easier to maintain when updates occur.
 
 ### Component tree
 
-The React component tree looks roughly like:
+The resulting React component tree looks roughly like:
 ```
 <Animated.View>     // Animated container for entire header
   <Header>          // Visible NativeBase header, think of it as the "background"
