@@ -70,18 +70,14 @@ class CustomBackButton extends HeaderBackButton {
           ref={c => this._root = c}
           activeOpacity={(this.props.activeOpacity) ? this.props.activeOpacity : 0.5}
         >
-          <View style={styles.textButtonContainer}>
-            <Icon name='arrow-back' />
-            <View style={styles.title}>
-              <Text
-                onLayout={this._onTextLayout}
-                numberOfLines={1}
-                style={styles.title}
-              >
-                {renderTruncated ? truncatedTitle : title}
-              </Text>
-            </View>
-          </View>
+          <Icon name='arrow-back' />
+          <Text
+            onLayout={this._onTextLayout}
+            numberOfLines={1}
+            style={styles.title}
+          >
+            {renderTruncated ? truncatedTitle : title}
+          </Text>
         </TouchableOpacity>
       );
     } else {
@@ -105,11 +101,6 @@ class CustomBackButton extends HeaderBackButton {
 }
 
 const styles = {
-  textButtonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   container: {
     flex: 1,
     alignItems: 'center',
