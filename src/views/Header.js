@@ -87,6 +87,7 @@ class CustomNavigationHeader extends ReactNavigationHeader {
         tintColor={tintColor}
         title={backButtonTitle}
         width={width}
+        transparent
       />
     );
   };
