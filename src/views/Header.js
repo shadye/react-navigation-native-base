@@ -93,6 +93,16 @@ class CustomNavigationHeader extends ReactNavigationHeader {
     );
   };
 
+  _renderLeft(props: NavigationSceneRendererProps): ?React.Element<*> {
+    return this._renderSubView(
+      props,
+      'left_nativebase',
+      this.props.renderLeftComponent,
+      this._renderLeftComponent,
+      HeaderStyleInterpolator.forLeft,
+    );
+  }
+
   _renderTitle(props: NavigationSceneRendererProps, options: *): ?React.Element<*> {
     const style = {};
 
@@ -111,6 +121,16 @@ class CustomNavigationHeader extends ReactNavigationHeader {
       this.props.renderTitleComponent,
       this._renderTitleComponent,
       HeaderStyleInterpolator.forCenter,
+    );
+  }
+
+  _renderRight(props: NavigationSceneRendererProps): ?React.Element<*> {
+    return this._renderSubView(
+      props,
+      'right_nativebase',
+      this.props.renderRightComponent,
+      this._renderRightComponent,
+      HeaderStyleInterpolator.forRight,
     );
   }
 
