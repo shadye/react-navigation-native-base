@@ -9,7 +9,7 @@ module.exports = {
   // Header
   get Header() { return require('./views/Header').default; },
 
-  // TabBar
-  get TabBarBottom() { return require('./views/TabBarBottom').default; },
-  //get TabBarTop() { return require('./views/TabBarTop').default; }, // TODO
+  // Tabs
+  get FooterTab() { return require('./views/FooterTab').default; },
+  //get Tabs() { return require('./views/Tabs').default; }, // TODO
 };

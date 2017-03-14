@@ -5,9 +5,9 @@ NativeBase components for react-navigation
 Implemented component shims:
 
 * `<Header>`
-* `<TabBarBottom>`
+* `<FooterTab>`
 
-Coming soon™: `<TabBarBottom>` and `<Drawer>` shims.
+Coming soon™: `<Tabs>` and `<Drawer>` shims.
 
 ## Requirements
 * [react-navigation](https://reactnavigation.org/docs/intro/)
@@ -40,19 +40,19 @@ NativeBase `<Header>`.
 
 [Click here for Header documentation](/docs/header.md)
 
-### TabBar
+### Tabs
 
 Add the custom tabBarComponent into your TabNavigatorConfig:
 
 ```
-import { TabBarBottom } from 'react-navigation-native-base';
+import { FooterTab } from 'react-navigation-native-base';
 
 ...
 
 const TabScreenNavigator = TabNavigator({
   // RouteConfigs...
 }, {
-  tabBarComponent: TabBarBottom, // TODO: TabBarTop support
+  tabBarComponent: FooterTab,
   tabBarPosition: 'bottom'
 });
 ```
