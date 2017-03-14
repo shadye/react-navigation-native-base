@@ -9,6 +9,7 @@ import { Header, Left, Right, Body } from 'native-base';
 import ReactNavigationHeader from 'react-navigation/lib-rn/views/Header';
 import addNavigationHelpers from 'react-navigation/lib-rn/addNavigationHelpers';
 import NavigationPropTypes from 'react-navigation/lib-rn/PropTypes';
+import HeaderStyleInterpolator from 'react-navigation/lib-rn/views/HeaderStyleInterpolator';
 
 import type {
   NavigationScene,
@@ -91,6 +92,27 @@ class CustomNavigationHeader extends ReactNavigationHeader {
       />
     );
   };
+
+  _renderTitle(props: NavigationSceneRendererProps, options: *): ?React.Element<*> {
+    const style = {};
+
+    if (Platform.OS === 'android') {
+      if (!options.hasLeftComponent) {
+        style.left = 0;
+      }
+      if (!options.hasRightComponent) {
+        style.right = 0;
+      }
+    }
+
+    return this._renderSubView(
+      { ...props, style },
+      'title_nativebase',
+      this.props.renderTitleComponent,
+      this._renderTitleComponent,
+      HeaderStyleInterpolator.forCenter,
+    );
+  }
 
   // Custom _renderHeader() which renders children inside an invisible NativeBase <Header>
   _renderHeader(props: NavigationSceneRendererProps): React.Element<*> {
