@@ -1,6 +1,6 @@
 {
   "name": "react-navigation-native-base",
-  "version": "1.0.0-beta.6.3",
+  "version": "1.0.0-beta.7",
   "description": "NativeBase Header component for react-navigation",
   "main": "src/react-navigation.js",
   "sources": {
