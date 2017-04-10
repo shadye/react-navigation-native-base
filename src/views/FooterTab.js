@@ -17,11 +17,11 @@ import type {
   NavigationRoute,
   NavigationState,
   Style,
-} from 'react-navigation/lib-rn/TypeDefinition';
+} from 'react-navigation/src/TypeDefinition';
 
 import type {
   TabScene,
-} from 'react-navigation/lib-rn/src/views/TabView';
+} from 'react-navigation/src/views/TabView';
 
 type DefaultProps = {
   activeTintColor: string;
