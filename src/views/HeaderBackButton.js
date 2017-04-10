@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import HeaderBackButton from 'react-navigation/lib-rn/views/HeaderBackButton';
+import HeaderBackButton from 'react-navigation/src/views/HeaderBackButton';
 
 import { TouchableOpacity, Platform, View, TouchableNativeFeedback, I18nManager } from 'react-native';
 

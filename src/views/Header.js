@@ -6,16 +6,16 @@ import { View, StyleSheet, Animated, Platform } from 'react-native';
 
 import { Header, Left, Right, Body } from 'native-base';
 
-import ReactNavigationHeader from 'react-navigation/lib-rn/views/Header';
-import addNavigationHelpers from 'react-navigation/lib-rn/addNavigationHelpers';
-import NavigationPropTypes from 'react-navigation/lib-rn/PropTypes';
-import HeaderStyleInterpolator from 'react-navigation/lib-rn/views/HeaderStyleInterpolator';
+import ReactNavigationHeader from 'react-navigation/src/views/Header';
+import addNavigationHelpers from 'react-navigation/src/addNavigationHelpers';
+import NavigationPropTypes from 'react-navigation/src/PropTypes';
+import HeaderStyleInterpolator from 'react-navigation/src/views/HeaderStyleInterpolator';
 
 import type {
   NavigationScene,
   NavigationSceneRendererProps,
   LayoutEvent,
-} from 'react-navigation/lib/TypeDefinition';
+} from 'react-navigation/src/TypeDefinition';
 
 type SubViewProps = NavigationSceneRendererProps & {
   onNavigateBack?: () => void,
